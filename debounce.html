@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debounce JS Example</title>
+  </head>
+  <body>
+    <input type="text" id="debounce-me" />
+
+    <script>
+      (function () {
+        const input = document.querySelector('#debounce-me');
+
+        /**
+         * Debounce в JavaScript - это техника, позволяющая ограничить частоту вызова функции,
+         * задерживая ее выполнение до тех пор, пока не пройдет определенный период времени после последнего вызова.
+         * Иными словами, если функция вызывается несколько раз подряд,
+         * debounce "собирает" эти вызовы и выполняет функцию только один раз,
+         * после того как пауза между вызовами превысит заданный интервал
+         *
+         * @param {Function} func
+         * @param {number} delay
+         * @return {Function}
+         *
+         * @see https://doka.guide/js/debounce
+         */
+        function debounce(func, delay) {
+          let debounceTimer;
+          return function () {
+            const context = this;
+            const args = arguments;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);
+          };
+        }
+
+        function handler(e) {
+          console.log(`[${Date.now()}]: Triggered after typing!`);
+        }
+
+        // Использование
+        const debouncedHandler = debounce(handler, 300);
+        input.addEventListener('input', debouncedHandler);
+      })();
+    </script>
+  </body>
+</html>

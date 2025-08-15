@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      body,
+      body * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        color: #111617;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      main {
+        padding: 2.5rem 0;
+      }
+
+      h1 {
+        margin: 0 0 2rem;
+      }
+
+      /*
+       * =========== Container Grid ===========
+       */
+
+      .container {
+        padding: 0 1rem;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      @media screen and (min-width: 576px) {
+        .container {
+          max-width: 540px;
+        }
+      }
+
+      @media screen and (min-width: 768px) {
+        .container {
+          max-width: 720px;
+        }
+      }
+
+      @media screen and (min-width: 992px) {
+        .container {
+          max-width: 960px;
+        }
+      }
+
+      @media screen and (min-width: 1200px) {
+        .container {
+          max-width: 1140px;
+        }
+      }
+
+      /*
+       * =========== /Container Grid ===========
+       */
+
+      .wrapper {
+        --row-gap: 30px;
+        --column-gap: 20px;
+        --cards-number: 4;
+      }
+
+      .card {
+        --border-radius: 0.5rem;
+
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #e1e9ef;
+        border-radius: var(--border-radius);
+      }
+
+      /* 
+       * Для первого варианта, тоже самое что и выше
+       */
+
+      /* .card-shell {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #e1e9ef;
+        border-radius: var(--border-radius);
+      } */
+
+      .card-image {
+        width: 100%;
+        height: auto;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+      }
+
+      .card-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        row-gap: 20px;
+        height: 100%;
+      }
+
+      .card-body {
+        padding: 1.75rem 1.5rem 0;
+      }
+
+      .card-footer {
+        padding: 0 1.5rem 1.75rem;
+      }
+
+      .card-body__title {
+        color: #111617;
+        display: block;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.15;
+        margin: 0 0 14px;
+      }
+
+      .card-body__description {
+        color: #111617;
+        display: block;
+        font-size: 16px;
+        line-height: 1.3;
+        margin: 0;
+      }
+
+      .card-body__published {
+        color: #858585;
+        line-height: 1;
+        font-size: 14px;
+      }
+
+      /*
+       * =================================================
+       * ==================== Примеры ====================
+       * =================================================
+       */
+
+      /* 
+       * Вариант 1: самый простой и устаревший, для него нужна доп обертка card-shell
+       */
+      .wrapper.--first-grid {
+        margin: 0 calc(var(--column-gap) / 2 * -1);
+      }
+
+      .wrapper.--first-grid .card {
+        width: calc(100% / var(--cards-number));
+        padding: 0 calc(var(--column-gap) / 2);
+      }
+
+      /* 
+       * Вариант 2: Класический на флексах с калькуляцией гэпа
+       */
+      .wrapper.--second-grid {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        /* align-items: stretch; */
+        flex-wrap: wrap;
+        column-gap: var(--column-gap);
+        row-gap: var(--row-gap);
+      }
+
+      /* Формула корректировки gap = (100% / 4) - (20px * 3 / 4) */
+      .wrapper.--second-grid .card {
+        --card-width: calc(100% / var(--cards-number));
+        --gap-correct: calc(var(--column-gap) * (var(--cards-number) - 1) / var(--cards-number));
+
+        flex: 0 0 auto;
+        width: calc(var(--card-width) - var(--gap-correct));
+      }
+
+      /* 
+       * Вариант 3: Продвинутый, с display: grid;
+       */
+      .wrapper.--third-grid {
+        display: grid;
+        grid-template-columns: repeat(var(--cards-number), 1fr);
+        grid-template-rows: auto;
+        grid-auto-flow: dense;
+        grid-column-gap: var(--column-gap);
+        grid-row-gap: var(--row-gap);
+        align-items: flex-start;
+      }
+
+      .wrapper.--third-grid .card {
+        width: auto;
+      }
+
+      @media only screen and (max-width: 1234px) {
+        .wrapper {
+          --cards-number: 3;
+        }
+      }
+      
+      @media only screen and (max-width: 991px) {
+        .wrapper {
+          --cards-number: 2;
+        }
+      }
+
+      @media only screen and (max-width: 742px) {
+        .wrapper {
+          --cards-number: 1;
+        }
+
+        .wrapper .card {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <h1>Новости технологий и IT инфраструктуры</h1>
+
+        <div class="wrapper --third-grid">
+          <div class="card">
+            <img class="card-image" src="https://placehold.jp/200x150.png" alt="placehold" decoding="async" />
+
+            <div class="card-content">
+              <div class="card-body">
+                <h2 class="card-body__title">
+                  Тема обеспечения безопасности Open Source компонентов как никогда актуальна
+                </h2>
+
+                <p class="card-body__description">
+                  Дмитрий Смирнов, начальник отдела информационной безопасности NGENIX, рассказал во время общения с
+                  журналистами издания CISOCLUB, что на текущий момент тема обеспечения безопасности Open Source
+                  компонентов стала как никогда актуальна.
+                </p>
+              </div>
+
+              <div class="card-footer">
+                <time class="card-body__published" datetime="2024-03-12">1 год назад</time>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <img class="card-image" src="https://placehold.jp/200x150.png" alt="placehold" decoding="async" />
+
+            <div class="card-content">
+              <div class="card-body">
+                <h2 class="card-body__title">Эксперты спрогнозировали рост хакерских атак к президентским выборам</h2>
+
+                <p class="card-body__description">
+                  Специалисты в области противодействия кибератакам отметили рост «утечек» баз данных. В прошлом году
+                  было зафиксировано более 440 млн таких случаев. Противодействие хакерским угрозам обсудили участники
+                  встречи IT-экспертов с разработчиками федеральной платформы дистанционного электронного голосования
+                  (ДЭГ) на площадке Дата-центра компании Ростелеком.
+                </p>
+              </div>
+
+              <div class="card-footer">
+                <time class="card-body__published" datetime="2025-01-26">3 месяца назад</time>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <img class="card-image" src="https://placehold.jp/200x150.png" alt="placehold" decoding="async" />
+
+            <div class="card-content">
+              <div class="card-body">
+                <h2 class="card-body__title">Сервисы ИБ-аутсорсинга в России вырастут быстрее рынка</h2>
+
+                <p class="card-body__description">
+                  Ры­нок аут­сор­син­га ИБ в Рос­сии в те­чение бли­жай­ших как ми­нимум двух лет бу­дет про­дол­жать
+                  рас­ти быс­тры­ми тем­па­ми. Ос­нов­ной ауди­торией, по мне­нию иг­ро­ков рын­ка, ста­нет сред­ний
+                  биз­нес, ко­торый под­вер­гает­ся ата­кам, но при этом у не­го не­дос­та­точ­но средств на соз­да­ние
+                  пол­но­цен­ной сис­те­мы за­щиты и прив­ле­чение ква­лифи­циро­ван­но­го пер­со­нала.
+                </p>
+              </div>
+
+              <div class="card-footer">
+                <time class="card-body__published" datetime="2024-03-12">1 год назад</time>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <img class="card-image" src="https://placehold.jp/200x150.png" alt="placehold" decoding="async" />
+
+            <div class="card-content">
+              <div class="card-body">
+                <h2 class="card-body__title">Спрос на WAF в России кратно вырос</h2>
+
+                <p class="card-body__description">
+                  К на­чалу 2023 г. вос­тре­бован­ность сис­тем меж­се­тево­го эк­ра­ниро­вания веб-при­ложе­ний (WAF) в
+                  Рос­сии вы­рос­ла крат­но. В ито­ге оте­чес­твен­ный ры­нок стал од­ним из клю­чевых сег­мен­тов
+                  ми­рово­го.
+                </p>
+              </div>
+
+              <div class="card-footer">
+                <time class="card-body__published" datetime="2024-03-12">1 год назад</time>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
