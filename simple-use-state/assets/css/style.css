@@ -1,0 +1,30 @@
+html,
+body {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: 1270px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.main-app__wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.main-app__plus,
+.main-app__minus {
+  line-height: 1;
+  font-size: 20px;
+  cursor: pointer;
+  width: 28px;
+}
+
+.main-app__counter {
+  width: 40px;
+  height: 20px;
+}
