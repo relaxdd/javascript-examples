@@ -8,23 +8,23 @@ user_company, user_company, grid_spacer, description, grid_spacer, too`;
  * @param {string} spacer
  * @returns {string[][]}
  */
-function transform_form_schema_to_columns(source = '', spacer = 'grid_spacer') {
+var transform_form_schema_to_columns = function (source = '', spacer = 'grid_spacer') {
   const rows = source
     .trim()
     .split('\n')
-    .map((it) =>
-      it
+    .map((line) =>
+      line
         .trim()
         .split(',')
-        .map((it) => it.trim())
+        .map((word) => word.trim())
     );
 
   const { transform, totalCols } = rows.reduce(
-    function (acc, row, i) {
-      const qtySpacers = [...test.join(',').matchAll(spacer)].length;
+    function (acc, row) {
+      const qtySpacers = [...row.join(',').matchAll(spacer)].length;
 
       if (qtySpacers === 0) {
-        acc.transform.push(row);
+        acc.transform.push([row]);
       } else if (qtySpacers === 1) {
         const index = row.indexOf(spacer);
         const start = row.slice(0, index);
@@ -56,21 +56,26 @@ function transform_form_schema_to_columns(source = '', spacer = 'grid_spacer') {
   );
 
   var result = [];
-  var maxCol = Math.max(...totalCols);
+  var maxCols = Math.max(...totalCols);
 
-  for (let k = 0; k < maxCol; k++) {
+  // for (let k = 0; k < maxCols; k++) {
+  //   for (let i = 0; i < transform.length; i++) {
+  //     result.push(...(transform?.[i]?.[k] || []));
+  //   }
+  // }
+
+  for (let k = 0; k < maxCols; k++) {
     var column = [];
 
     for (let i = 0; i < transform.length; i++) {
       column.push(transform?.[i]?.[k] || []);
-      // result.push(...(transform?.[i]?.[k] || []));
     }
 
     result.push(column);
   }
 
   return [...new Set(result)];
-}
+};
 
 console.log(transform_form_schema_to_columns(str));
 
